@@ -6,7 +6,9 @@
     - keep zoomed in album cover
     - put artist photo in corner? (optional)
     - test
-    
+    - speaker addon (to link to physical speakers)
+        - basically make an individual player like a google home
+    - weather addon
 ### Overview
 This project is to display information on a 5.7" e-ink from the Spotify web api.
 ### Getting Started
