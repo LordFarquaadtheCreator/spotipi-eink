@@ -5,6 +5,7 @@
 - remove album cover square 
     - keep zoomed in album cover
     - put artist photo in corner? (optional)
+    - test
     
 ### Overview
 This project is to display information on a 5.7" e-ink from the Spotify web api.
