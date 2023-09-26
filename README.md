@@ -1,4 +1,11 @@
 # Spotipi E-Ink
+
+# TODO:
+- set up virtual environment where you can see the software running for live debugging
+- remove album cover square 
+    - keep zoomed in album cover
+    - put artist photo in corner? (optional)
+    
 ### Overview
 This project is to display information on a 5.7" e-ink from the Spotify web api.
 ### Getting Started
