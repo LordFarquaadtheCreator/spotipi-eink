@@ -1,23 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react';
+import WebPlayback  from './components/WebPlayback';
+import Login from './components/Login';
 import './App.css'
-import axios from 'axios';
 
 function App() {
-  function SignIn(){
-    axios.get('auth/login')
-    .then((response) => {
+
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+
+    async function getToken() {
+      const response = await fetch('/auth/token');
+      // console.log(response);
+      const json = await response.json();
       console.log(response);
-    }, (error) => {
-      console.log(error);
-    });
-  }
+      setToken(json.access_token);
+    }
+
+    getToken();
+
+  }, []);
+
   return (
     <>
-      <div>
-        <button onClick={() => SignIn()}>Sign In</button>
-      </div>
+        { (token === '') ? <Login/> : <WebPlayback token={token} /> }
     </>
-  )
+  );
 }
 
 export default App

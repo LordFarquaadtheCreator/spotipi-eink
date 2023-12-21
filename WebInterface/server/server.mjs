@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import request from 'request';
 import 'dotenv/config';
 const SPOTIFY_CLIENTID = process.env.SPOTIFY_CLIENTID;
 const SPOTIFY_CLIENTSECRET = process.env.SPOTIFY_CLIENTSECRET;
@@ -27,14 +28,17 @@ var generateRandomString = function (length) {
 };
 
 app.get('/auth/login', (req, res) => {
-  var scope = "streaming user-read-email user-read-private"
+  var scope = "streaming \
+               user-read-email \
+               user-read-private"
+
   var state = generateRandomString(16);
 
   var auth_query_parameters = new URLSearchParams({
     response_type: "code",
     client_id: SPOTIFY_CLIENTID,
     scope: scope,
-    redirect_uri: SPOTIFY_REDIRECT_URI,
+    redirect_uri: "http://localhost:4000/auth/callback",
     state: state
   })
 
@@ -49,7 +53,7 @@ app.get('/auth/callback', (req, res) => {
     url: 'https://accounts.spotify.com/api/token',
     form: {
       code: code,
-      redirect_uri: SPOTIFY_REDIRECT_URI,
+      redirect_uri: "http://localhost:4000/auth/callback",
       grant_type: 'authorization_code'
     },
     headers: {
@@ -61,12 +65,12 @@ app.get('/auth/callback', (req, res) => {
 
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      access_token = body.access_token;
+      var access_token = body.access_token;
       res.redirect('/')
     }
   });
-
 })
+
 
 app.get('/auth/token', (req, res) => {
   res.json({ access_token: access_token})
